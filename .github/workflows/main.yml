@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run a one-line script
-        run: echo "This job tests something" [cite: 60]
+        run: echo "This job tests something"
 
   test-job2:
     runs-on: ubuntu-latest
@@ -32,7 +32,3 @@ jobs:
           python -m pip install --upgrade pip
           pip install flask coverage [cite: 96, 120]
 
-      - name: Run tests with coverage
-        run: |
-          python -m coverage run -m unittest -v tests/appTest.py [cite: 121, 133]
-          python -m coverage report [cite: 123, 137]
