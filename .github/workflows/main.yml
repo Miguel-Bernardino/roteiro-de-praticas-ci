@@ -20,3 +20,16 @@ jobs:
     - name: Qualquer Coisa
       run: echo "Qualquer coisa"
 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        [cite_start]python-version: '3.11' # Conforme requisito do roteiro [cite: 29]
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask coverage [cite: 96, 120]
+
