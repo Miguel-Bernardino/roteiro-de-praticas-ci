@@ -1,0 +1,22 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test-job:            # Nome do Job (Equivalente ao nome do bloco no GitLab)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: echo "This job tests something"
+  test-job2:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Qualquer Coisa
+      run: echo "Qualquer coisa"
+
