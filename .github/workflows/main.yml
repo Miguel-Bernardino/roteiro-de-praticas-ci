@@ -1,27 +1,23 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ "main", "master" ]
 
 jobs:
-  build:        # <--- Este é o equivalente ao "Stage: build"
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-        - name: Simulando o Build
-          run: echo "Olá, $GITHUB_ACTOR!"
-  test-job:            
+  build-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Run a one-line script
-        run: echo "This job tests something"
+      - name: Checkout código
+        uses: actions/checkout@v4
 
-  test-job2:
+      - name: Saudação
+        run: echo "Olá, $GITHUB_ACTOR! Iniciando o build..."
+
+  test-job:
     runs-on: ubuntu-latest
+    needs: build-job
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -30,44 +26,30 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install flask
-        run: pip install flask
-
-      - name: run tests
-        run: python -m unittest -v tests/appTest.py
-      
-      - name: Install coverage
-        run: pip install coverage
+      - name: Install dependencies
+        run: pip install flask coverage
 
       - name: Run tests with coverage
         run: |
           python -m coverage run -m unittest -v tests/appTest.py 
           python -m coverage report 
-          
-analyze:
+
+  analyze:
     name: Analyze (SAST)
     runs-on: ubuntu-latest
-    needs: test-job2  # <--- IMPORTANTE: Define a ordem (Teste -> Segurança)
+    needs: test-job
     permissions:
       actions: read
       contents: read
       security-events: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: 'python'
-
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3
-
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-
-
-      
-
