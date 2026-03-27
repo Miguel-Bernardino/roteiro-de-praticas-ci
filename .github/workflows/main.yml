@@ -5,6 +5,13 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
+  build:        # <--- Este é o equivalente ao "Stage: build"
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Simulando o Build
+          run: echo "Compilando a aplicação..."
   test-job:            
     runs-on: ubuntu-latest
     steps:
@@ -36,6 +43,7 @@ jobs:
         run: |
           python -m coverage run -m unittest -v tests/appTest.py 
           python -m coverage report 
+
 
       
 
