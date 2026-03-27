@@ -11,7 +11,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v4
         - name: Simulando o Build
-          run: echo "Compilando a aplicação..."
+          run: echo "Olá, $GITHUB_ACTOR!"
   test-job:            
     runs-on: ubuntu-latest
     steps:
